@@ -4,7 +4,7 @@ This GIMP Python-Fu script adds horizontal borders to all portrait format images
 
 ## How to Use
 
-1. Copy the file `Querformat-inator.py` to the following directory:
+1. Copy the file `Querformat-inator.py` to the following directory:  
    `C:\Users\<user>\AppData\Roaming\GIMP\2.10\plug-ins`
 1. Launch GIMP.
 1. Find the script here: `File` → `Create` → `Querformat-inator`
