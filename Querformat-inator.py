@@ -2,7 +2,7 @@
 
 from gimpfu import *
 
-def landscape_inator(dirname, color):
+def landscape_inator(dirname, color, max_width):
     pdb.gimp_context_push()
 
     pattern_jpg = dirname + "\\*.jpg"
@@ -24,16 +24,15 @@ def landscape_inator(dirname, color):
 
         if height > width:
             new_width = height
-            new_height = height
             offx = (new_width - width) / 2
             offy = 0
-            pdb.gimp_image_resize(image, new_width, new_height, offx, offy)
+            pdb.gimp_image_resize(image, new_width, height, offx, offy)
 
             type = 0 # RGB-IMAGE
             name = ""
             opacity = 100
             mode = 28 # LAYER-MODE-NORMAL
-            new_layer = pdb.gimp_layer_new(image, new_width, new_height, type, name, opacity, mode)
+            new_layer = pdb.gimp_layer_new(image, new_width, height, type, name, opacity, mode)
 
             parent = None
             num_layers, layer_ids = pdb.gimp_image_get_layers(image)
@@ -49,6 +48,12 @@ def landscape_inator(dirname, color):
 
             merge_type = 1 # CLIP-TO-IMAGE
             drawable = pdb.gimp_image_merge_visible_layers(image, merge_type)
+
+            width = new_width
+
+        new_width = min(width, max_width)
+        new_height = height * (1.0 * new_width / width)
+        pdb.gimp_image_scale(image, new_width, new_height)
 
         filename_split = filename.split(".")
         filename_landscape = ".".join(filename_split[:-1]) + "_quer." + filename_split[-1]
@@ -66,7 +71,8 @@ register(
     "", 
     [
         (PF_DIRNAME, "dirname", "Verzeichnis", None),
-        (PF_COLOR, "color", "Fuellfarbe", (255, 255, 255))
+        (PF_COLOR, "color", "Fuellfarbe", (255, 255, 255)),
+        (PF_SPINNER, "max_width", "Max. Bildbreite", 1920, (1, 9999, 1))
     ],
     [],
     landscape_inator, menu="<Image>/File/Create")
