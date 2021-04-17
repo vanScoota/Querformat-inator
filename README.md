@@ -18,7 +18,7 @@ This GIMP Python-Fu script adds horizontal borders to all portrait format images
 ### [1.1.0] - 2021-04-17
 
 #### Added
-- Images wider than a entered maximum get scaled to that width.
+- Images wider than an entered maximum get scaled to that width.
 
 ### [1.0.0] - 2021-03-29
 
